@@ -1,8 +1,8 @@
 interface Props {
   description: string;
   title: string;
-  removeNote: (id: number) => void;
-  id: number;
+  removeNote: (id: string) => void;
+  id: string;
 }
 
 function Note({ description, title, removeNote, id }: Props) {

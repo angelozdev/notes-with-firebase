@@ -1,38 +1,25 @@
 import { useCallback, useState } from "react";
 import { Layout, NoteList, Wrapper, NoteForm } from "./components";
 import { Note as INote } from "./types";
-
-const initialNotes: INote[] = [
-  {
-    id: 1,
-    description: "nota uno",
-    title: "Title one",
-  },
-  {
-    id: 2,
-    description: "nota dos",
-    title: "Title :D",
-  },
-];
+import { useEffect } from "react";
+import { notesService } from "./services";
 
 function App() {
-  const [notes, setNotes] = useState(initialNotes);
+  const [notes, setNotes] = useState<INote[]>([]);
 
-  const removeNote = useCallback(
-    (id: number) => {
-      const newNotes = notes.filter((n) => n.id !== id);
-      setNotes(newNotes);
-    },
-    [notes]
-  );
+  const removeNote = useCallback(async (id: string) => {
+    await notesService.removeANoteById(id);
+  }, []);
 
-  const addANote = useCallback(
-    (note: Omit<INote, "id">) => {
-      const newNotes = notes.concat({ ...note, id: Date.now() });
-      setNotes(newNotes);
-    },
-    [notes]
-  );
+  const addANote = useCallback(async (note: Omit<INote, "id">) => {
+    await notesService.addANewNote(note);
+  }, []);
+
+  useEffect(() => {
+    const unsubcribe = notesService.getAllNotes(setNotes);
+
+    return () => unsubcribe();
+  }, []);
 
   return (
     <Layout>

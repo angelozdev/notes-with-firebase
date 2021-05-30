@@ -3,7 +3,7 @@ import { Note } from "./";
 import { Note as INote } from "../types";
 
 interface Props {
-  removeNote: (id: number) => void;
+  removeNote: (id: string) => void;
   notes: INote[];
 }
 
