@@ -1,39 +1,31 @@
-import React from "react";
+import { Fragment } from "react";
 import { Note } from "./";
-const initialNotes = [
-  {
-    id: 1,
-    description: "nota uno",
-  },
-  {
-    id: 2,
-    description: "nota dos",
-  },
-];
+import { Note as INote } from "../types";
 
-function NoteList() {
-  const [notes, setNotes] = React.useState(initialNotes);
+interface Props {
+  removeNote: (id: number) => void;
+  notes: INote[];
+}
 
-  const removeNote = React.useCallback(
-    (id: number) => {
-      const newNotes = notes.filter((n) => n.id !== id);
-      setNotes(newNotes);
-    },
-    [notes]
-  );
-
+function NoteList({ removeNote, notes }: Props) {
   return (
-    <ul>
-      {notes.map(({ id, description }) => (
-        <Note
-          key={id}
-          id={id}
-          description={description}
-          title="Mi title"
-          removeNote={removeNote}
-        />
-      ))}
-    </ul>
+    <Fragment>
+      <h1 className="text-2xl font-semibold mb-3">
+        My notes <span>({notes.length})</span>
+      </h1>
+
+      <ul>
+        {notes.map(({ id, description, title }) => (
+          <Note
+            key={id}
+            id={id}
+            description={description}
+            title={title}
+            removeNote={removeNote}
+          />
+        ))}
+      </ul>
+    </Fragment>
   );
 }
 
