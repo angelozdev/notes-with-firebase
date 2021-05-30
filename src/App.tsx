@@ -1,7 +1,13 @@
-import { Layout } from "./components";
+import { Layout, NoteList, Wrapper } from "./components";
 
 function App() {
-  return <Layout>Hola mundo</Layout>;
+  return (
+    <Layout>
+      <Wrapper>
+        <NoteList />
+      </Wrapper>
+    </Layout>
+  );
 }
 
 export default App;
