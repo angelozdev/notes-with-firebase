@@ -10,4 +10,5 @@ module.exports = {
     extend: {},
   },
   plugins: [daisyui],
+  daisyui: false,
 };

@@ -18,7 +18,7 @@ function NoteList() {
   }, []);
 
   if (isLoading) {
-    return <p>Loading...</p>;
+    return <p className="btn btn-ghost loading">Loading...</p>;
   }
 
   return (
