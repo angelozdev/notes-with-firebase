@@ -1,4 +1,4 @@
-import { ChangeEvent, useState } from "react";
+import { ChangeEvent, useState, useEffect } from "react";
 import { notesService } from "../services";
 import { NoteFromServer } from "../types";
 
@@ -45,6 +45,10 @@ function Note({ description, title, id, createAt }: NoteFromServer) {
     timeStyle: "short",
   }).format(date);
 
+  useEffect(() => {
+    setNewValues({ description, title });
+  }, [description, title]);
+
   return (
     <li className="card lg:card-side border mb-2 hover:shadow">
       <div className="card-body p-4">
@@ -69,7 +73,7 @@ function Note({ description, title, id, createAt }: NoteFromServer) {
             }}
             className="card-title"
           >
-            {title}
+            {newValues.title}
           </h2>
         )}
 
@@ -92,31 +96,33 @@ function Note({ description, title, id, createAt }: NoteFromServer) {
                 description: true,
               });
             }}
-            className="mb-4"
           >
-            {description}
+            {newValues.description}
           </p>
         )}
 
-        <p className="text-gray-500 border-t">
-          <time>
-            <small>{formatedDate}</small>
-          </time>
+        <div className="divider my-1" />
+
+        <p className="text-gray-500 text-xs">
+          <time>{formatedDate}</time>
         </p>
 
-        <div className="card-actions">
-          {(isEditMode.description || isEditMode.title) && (
-            <button onClick={updateNote} className="btn btn-warning btn-sm">
+        <div className="mt-2">
+          {isEditMode.description || isEditMode.title ? (
+            <button
+              onClick={updateNote}
+              className="btn btn-warning btn-sm mr-2"
+            >
               Modify
             </button>
+          ) : (
+            <button
+              onClick={deleteNote}
+              className="btn btn-ghost btn-sm hover:bg-red-700 hover:text-white text-red-700 border border-red-700"
+            >
+              Delete note
+            </button>
           )}
-
-          <button
-            onClick={deleteNote}
-            className="btn btn-ghost btn-sm hover:bg-red-700 hover:text-white text-red-700"
-          >
-            Delete note
-          </button>
         </div>
       </div>
     </li>

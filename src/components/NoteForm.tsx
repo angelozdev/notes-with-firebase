@@ -20,6 +20,7 @@ function NoteForm() {
     e.preventDefault();
     notesService.addANewNote(values);
     setValues({ title: "", description: "" });
+    window.history.back();
   };
 
   return (
@@ -53,10 +54,14 @@ function NoteForm() {
 
       <button
         disabled={!values.title || !values.description}
-        className="btn btn-success btn-sm"
+        className="btn btn-success btn-sm mr-2"
       >
         Save
       </button>
+
+      <a href="/#" className="btn btn-warning btn-sm">
+        Cancel
+      </a>
     </form>
   );
 }
