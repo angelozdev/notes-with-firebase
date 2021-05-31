@@ -1,13 +1,26 @@
-import { Fragment } from "react";
+import { Fragment, useEffect, useState } from "react";
 import { Note } from "./";
-import { Note as INote } from "../types";
+import { NoteFromServer } from "../types";
+import { notesService } from "../services";
 
-interface Props {
-  removeNote: (id: string) => void;
-  notes: INote[];
-}
+function NoteList() {
+  const [notes, setNotes] = useState<NoteFromServer[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
 
-function NoteList({ removeNote, notes }: Props) {
+  useEffect(() => {
+    setIsLoading(true);
+    const unsubcribe = notesService.getAllNotes((notes) => {
+      setNotes(notes);
+      setIsLoading(false);
+    });
+
+    return () => unsubcribe();
+  }, []);
+
+  if (isLoading) {
+    return <p>Loading...</p>;
+  }
+
   return (
     <Fragment>
       <h1 className="text-2xl font-semibold mb-3">
@@ -15,13 +28,13 @@ function NoteList({ removeNote, notes }: Props) {
       </h1>
 
       <ul>
-        {notes.map(({ id, description, title }) => (
+        {notes.map(({ id, description, title, createAt }) => (
           <Note
+            createAt={createAt}
             key={id}
             id={id}
             description={description}
             title={title}
-            removeNote={removeNote}
           />
         ))}
       </ul>

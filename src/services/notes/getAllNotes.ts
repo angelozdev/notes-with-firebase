@@ -1,10 +1,10 @@
 import { database } from "../../firebase/client";
-import { Note as INote } from "../../types";
+import { NoteFromServer } from "../../types";
 
-function getAllNotes(callback: (notes: INote[]) => void) {
+function getAllNotes(callback: (notes: NoteFromServer[]) => void) {
   return database.collection("notes").onSnapshot(({ docs }) => {
     const notes = docs.map((doc) => ({
-      ...(doc.data() as INote),
+      ...(doc.data() as NoteFromServer),
       id: doc.id,
     }));
 

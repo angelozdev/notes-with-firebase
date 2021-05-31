@@ -1,12 +1,9 @@
 import { ChangeEvent, FormEvent, useState } from "react";
+import { notesService } from "../services";
 import { Note as INote } from "../types";
 
-interface Props {
-  addANote: (note: Omit<INote, "id">) => void;
-}
-
-function NoteForm({ addANote }: Props) {
-  const [values, setValues] = useState({
+function NoteForm() {
+  const [values, setValues] = useState<INote>({
     title: "",
     description: "",
   });
@@ -21,7 +18,7 @@ function NoteForm({ addANote }: Props) {
 
   const onSubmit = (e: FormEvent) => {
     e.preventDefault();
-    addANote(values);
+    notesService.addANewNote(values);
     setValues({ title: "", description: "" });
   };
 
