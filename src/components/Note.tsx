@@ -6,6 +6,13 @@ function Note({ description, title, id, createAt }: NoteFromServer) {
     await notesService.removeANoteById(id);
   };
 
+  const updateNote = async () => {
+    await notesService.updateNote(id, {
+      title: "new title",
+      description: "new description",
+    });
+  };
+
   const date = new Date(createAt.seconds * 1000);
   const formatedDate = new Intl.DateTimeFormat("us-US", {
     dateStyle: "full",
@@ -16,7 +23,9 @@ function Note({ description, title, id, createAt }: NoteFromServer) {
     <li className="card lg:card-side border mb-2 hover:shadow">
       <div className="card-body p-4">
         <h2 className="card-title">{title}</h2>
-        <p className="mb-4">{description}</p>
+        <p onDoubleClick={() => alert(":D")} className="mb-4">
+          {description}
+        </p>
 
         <p className="text-gray-500 border-t">
           <time>
@@ -25,13 +34,15 @@ function Note({ description, title, id, createAt }: NoteFromServer) {
         </p>
 
         <div className="card-actions">
-          <button className="btn btn-warning btn-sm">Update</button>
+          <button onClick={updateNote} className="btn btn-warning btn-sm">
+            Modify
+          </button>
 
           <button
             onClick={deleteNote}
             className="btn btn-ghost btn-sm hover:bg-red-700 hover:text-white text-red-700"
           >
-            Remove note
+            Delete note
           </button>
         </div>
       </div>
