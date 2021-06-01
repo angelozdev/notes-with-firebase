@@ -1,4 +1,11 @@
-import { Layout, NoteList, Wrapper, NoteForm } from "./components";
+import {
+  Layout,
+  NoteList,
+  Wrapper,
+  NoteForm,
+  Alert,
+  Icons,
+} from "./components";
 
 function App() {
   return (
@@ -14,6 +21,10 @@ function App() {
             <NoteForm />
           </div>
         </div>
+
+        <Alert color="warning" Icon={Icons.Info}>
+          You can edit your notes by double click in the title or description.
+        </Alert>
 
         <NoteList />
       </Wrapper>

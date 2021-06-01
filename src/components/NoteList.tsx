@@ -23,7 +23,7 @@ function NoteList() {
 
   return (
     <Fragment>
-      <h1 className="text-2xl font-semibold mb-3">
+      <h1 className="text-2xl font-semibold my-3">
         My notes <span>({notes.length})</span>
       </h1>
 
