@@ -5,4 +5,5 @@ export { default as Note } from "./Note";
 export { default as NoteForm } from "./NoteForm";
 export { default as NoteList } from "./NoteList";
 export { default as Wrapper } from "./Wrapper";
+
 export * as Icons from "./icons";
